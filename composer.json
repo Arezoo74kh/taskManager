@@ -1,0 +1,16 @@
+{
+    "name": "ofogh/to-do-list",
+    "description": "A simple to do list project (with ajax,php, and sql)",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arezoo Kharras",
+            "email": "Arezoo74kh@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "hekmatinasser/verta": "^2.1"
+    }
+}
