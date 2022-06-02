@@ -1,12 +1,9 @@
-<?php
-echo implode('-',$tasks) , rand(0,99999);
-?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title><?= SITE_TITLE ?></title>
-  <link rel="stylesheet" href="<?= BASE_URL?>assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 <body>
@@ -24,14 +21,21 @@ echo implode('-',$tasks) , rand(0,99999);
         </div>
       </div>
       <div class="menu">
-        <div class="title">Navigation</div>
+        <div class="title">Folders</div>
         <ul>
-          <li> <i class="fa fa-home"></i>Home</li>
-          <li><i class="fa fa-signal"></i>Activity</li>
-          <li class="active"> <i class="fa fa-tasks"></i>Manage Tasks</li>
-          <li> <i class="fa fa-envelope"></i>Messages</li>
+          <?php foreach ($folders as $folder):?>
+          <li> 
+           <a href="?folder_id=<?= $folder->id ?>"> <i class="fa fa-folder"></i><?= $folder->name ?> </a> 
+           <a class="remove" href= "?delete_folder=<?= $folder->id ?>"><i class="fa fa-trash-alt"></i></a>
+          </li>
+          <?php endforeach;?>
+          <li class="active"> <i class="fa fa-folder"></i>Current folder</li>
         </ul>
       </div>
+      <div>
+          <input type="text" id="newFolderInput" placeholder="Add  New Folder"/>
+          <button id="newFolderBtn">+</button>
+        </div>
     </div>
     <div class="view">
       <div class="viewHeader">
@@ -74,7 +78,7 @@ echo implode('-',$tasks) , rand(0,99999);
   </div>
 </div>
 <!-- partial -->
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="assets/js/script.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="assets/js/script.js"></script>
 
 </body>
 </html>

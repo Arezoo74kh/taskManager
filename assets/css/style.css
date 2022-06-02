@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis:300|Lato:300,400,600,700|Roboto+Condensed:300,700|Open+Sans+Condensed:300,600|Open+Sans:400,300,600,700|Maven+Pro:400,700);
-@import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
 html {
-  background-image: url(http://www.ultraimg.com/images/2UeGfhZ.jpg);
+  background-image: url("../img/background.jpg");
 }
 
 body {
@@ -143,6 +143,10 @@ body {
   font-size: 1.4em;
   margin-right: 10px;
 }
+.main .nav .menu ul li a {
+  text-decoration: none;
+  color: #0c7388;
+}
 .main .view {
   position: relative;
   margin-left: 200px;
@@ -266,4 +270,21 @@ body {
 
 .clear {
   clear: both;
+}
+
+#newFolderInput {
+  margin: 15px;
+  width: 65%;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+#newFolderBtn {
+  border-radius: 4px;
+  padding: 4px;
+}
+
+a.remove {
+  color : rgb(210, 51, 51);
+  float: right;
 }

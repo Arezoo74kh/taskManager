@@ -1,4 +1,8 @@
 <?php
+
+    /*** Auth Functions ***/
+
+  
     function login($user,$password){
         return 1;
     }
