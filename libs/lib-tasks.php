@@ -15,8 +15,13 @@ function getCurrentUserId(){
         return $stmt->rowCount();
     }
 
-    function addFolders($data){
-      
+    function addFolders($folderName){
+        global $pdo;
+        $currentUserId = getCurrentUserId();
+        $sql = "INSERT INTO `folders` (name,user_id) VALUES (:folderName,:userId);";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':folderName'=>$folderName,':userId'=>$currentUserId]);
+        return $stmt->rowCount();
     }
 
     function getFolders(){
