@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASE_PATH') or die("Permision Denied!!!");
 
 include_once "../bootstrap/init.php";
 
