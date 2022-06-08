@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <title><?= SITE_TITLE ?></title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="page">
   <div class="pageHeader">
-    <div class="title">Dashboard</div>
-    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">John Doe </span><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg" width="40" height="40"/></div>
+    <div class="title">My Task manager</div>
+    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">Arezoo</span><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg" width="40" height="40"/></div>
   </div>
   <div class="main">
     <div class="nav">
@@ -23,13 +24,13 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="folderList">
-          <?php foreach ($folders as $folder):?>
-          <li> 
-           <a href="?folder_id=<?= $folder->id ?>"> <i class="fa fa-folder"></i><?= $folder->name ?> </a> 
-           <a class="remove" href= "?delete_folder=<?= $folder->id ?>"><i class="fa fa-trash-alt" id="trashHover"></i></a>
-          </li>
+        <li class=" <?= isset($_GET['folder_id']) ? '' : 'active' ?>"> <i class="fa fa-folder"></i>All</li>
+        <?php foreach ($folders as $folder):?>
+            <li class=" <?= ($_GET['folder_id'] == $folder->id) ? 'active' : ''?> "> 
+             <a href="?folder_id=<?= $folder->id ?>"> <i class="fa fa-folder"></i><?= $folder->name ?> </a> 
+             <a class="remove" href= "?delete_folder=<?= $folder->id ?>"><i class="fa fa-trash-alt" id="trashHover" onclick="return confirm('Are you sure to delete this item?\n<?= $folder->name ?>');"></i></a>
+            </li>
           <?php endforeach;?>
-          <li class="active"> <i class="fa fa-folder"></i>Current folder</li>
         </ul>
       </div>
       <div>
@@ -39,7 +40,9 @@
     </div>
     <div class="view">
       <div class="viewHeader">
-        <div class="title">Manage Tasks</div>
+        <div class="title">
+          <input type="text" id="addTaskInput" style="width:100%;margin-left:3%;line-height:30px;border-radius: 3px;" placeholder="Add New Task">
+        </div>
         <div class="functions">
           <div class="button active">Add New Task</div>
           <div class="button">Completed</div>
@@ -48,32 +51,25 @@
       </div>
       <div class="content">
         <div class="list">
-          <div class="title">Today</div>
+          <div class="title">Tasks</div>
           <ul>
-            <li class="checked"><i class="fa fa-check-square-o"></i><span>Update team page</span>
+          <?php if(sizeof($tasks)):?>
+          <?php foreach ($tasks as $task):?>
+            <li class="<?= $task->is_done ? 'checked' : '' ; ?>">
+            <i class="fa <?= $task->is_done ? 'fa-check-square' : 'fa-square' ; ?> "></i>
+            <span><?=$task->title?></span>
               <div class="info">
-                <div class="button green">In progress</div><span>Complete by 25/04/2014</span>
+                <span class="createdAt">Created At <?=$task->created_at?></span>
+                <a class="remove" href= "?delete_task=<?= $task->id ?>"><i class="fa fa-trash-alt" id="trashHover" onclick="return confirm('Are you sure to delete this item?\n<?= $task->title ?>');"></i></a>
               </div>
             </li>
-            <li><i class="fa fa-square-o"></i><span>Design a new logo</span>
-              <div class="info">
-                <div class="button">Pending</div><span>Complete by 10/04/2014</span>
-              </div>
-            </li>
-            <li><i class="fa fa-square-o"></i><span>Find a front end developer</span>
-              <div class="info"></div>
-            </li>
+          <?php endforeach;?>
+          <?php else: ?>
+            <li>No Task Here...</li>
+          <?php endif;?>
+           
           </ul>
         </div>
-        <div class="list">
-          <div class="title">Tomorrow</div>
-          <ul>
-            <li><i class="fa fa-square-o"></i><span>Find front end developer</span>
-              <div class="info"></div>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </div>
 </div>
