@@ -5,7 +5,6 @@
   <title><?= SITE_TITLE ?></title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -24,10 +23,10 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="folderList">
-        <li class=" <?= isset($_GET['folder_id']) ? '' : 'active' ?>"> <i class="fa fa-folder"></i>All</li>
+        <li class=" <?= isset($_GET['folder_id']) ? '' : 'active' ?>"> <i class="fa  <?= isset($_GET['folder_id']) ? 'fa-folder' : 'fa-folder-open' ?>"></i>All</li>
         <?php foreach ($folders as $folder):?>
             <li class=" <?= ($_GET['folder_id'] == $folder->id) ? 'active' : ''?> "> 
-             <a href="?folder_id=<?= $folder->id ?>"> <i class="fa fa-folder"></i><?= $folder->name ?> </a> 
+             <a href="?folder_id=<?= $folder->id ?>"> <i class="fa <?= ($_GET['folder_id'] == $folder->id) ? 'fa-folder-open' : 'fa-folder'?>"></i><?= $folder->name ?> </a> 
              <a class="remove" href= "?delete_folder=<?= $folder->id ?>"><i class="fa fa-trash-alt" id="trashHover" onclick="return confirm('Are you sure to delete this item?\n<?= $folder->name ?>');"></i></a>
             </li>
           <?php endforeach;?>
