@@ -15,7 +15,7 @@ function getCurrentUserId(){
         return $stmt->rowCount();
     }
 
-    function addFolders($folderName){
+    function addFolder($folderName){
         global $pdo;
         $currentUserId = getCurrentUserId();
         $sql = "INSERT INTO `folders` (name,user_id) VALUES (:folderName,:userId);";
@@ -44,8 +44,13 @@ function getCurrentUserId(){
         return $stmt->rowCount();
     }
 
-    function addTasks(){
-        return 1;
+    function addTask($taskTitle,$folderId){
+        global $pdo;
+        $currentUserId = getCurrentUserId();
+        $sql = "INSERT INTO `tasks` (title,user_id,folder_id) VALUES (:taskTitle,:userId,:folderId);";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':taskTitle'=>$taskTitle,':userId'=>$currentUserId, ':folderId'=>$folderId]);
+        return $stmt->rowCount();
     }
 
     function getTasks(){
@@ -55,9 +60,8 @@ function getCurrentUserId(){
         if(isset($folder) and is_numeric($folder)){
             $folderCondition = "and folder_id=$folder";
         }
-
         $currentUserId = getCurrentUserId();
-        $sql = "select * from tasks where user_id = $currentUserId $folderCondition";
+        $sql = "select * from tasks where user_id = $currentUserId $folderCondition  ORDER BY tasks.created_at DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);

@@ -16,10 +16,21 @@ switch($_POST['action']){
             echo "Please enter more than 2 characters...";
             die();
         }
-        echo addFolders($_POST['folderName']);
+        echo addFolder($_POST['folderName']);
     break;
     case "addTask":
-        // var_dump($_POST);
+
+        // $folderId = $_POST['folderId'];
+        // $taskTitle = $_POST['taskTitle'];
+        if(!isset($_POST['folderId']) || empty($_POST['folderId'])){
+            echo "Please choose 1 folder...";
+            die();
+        }
+        if(!isset($_POST['taskTitle']) || strlen($_POST['taskTitle'])<3){
+            echo "Please enter more than 2 characters...";
+            die();
+        }
+        echo addTask($taskTitle,$folderId); 
     break;
     
     default:

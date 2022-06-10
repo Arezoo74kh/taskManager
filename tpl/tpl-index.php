@@ -45,7 +45,6 @@
         <div class="functions">
           <div class="button active">Add New Task</div>
           <div class="button">Completed</div>
-          <div class="button inverz"><i class="fa fa-trash-o"></i></div>
         </div>
       </div>
       <div class="content">
@@ -56,6 +55,7 @@
           <?php foreach ($tasks as $task):?>
             <li class="<?= $task->is_done ? 'checked' : '' ; ?>">
             <i class="fa <?= $task->is_done ? 'fa-check-square' : 'fa-square' ; ?> "></i>
+            <i class="fa <?= $task->is_done ? 'fas fa-smile-wink' : 'fa-clock' ; ?> "></i>
             <span><?=$task->title?></span>
               <div class="info">
                 <span class="createdAt">Created At <?=$task->created_at?></span>
@@ -86,14 +86,38 @@
               success : function(response){
                 // alert('Data from the server = ' + response);
                 if(response == '1'){
-                  $('<li> <a href="#"><i class="fa fa-folder"></i>'+input.val()+' </a> </li>').appendTo('ul.folderList');
+                  // $('<li> <a href="#"><i class="fa fa-folder"></i>'+input.val()+' </a> </li>').appendTo('ul.folderList');
+                  location.reload();
                 }else{
                   alert(response);
                 }
               }
             })
           });
+
+          $('#addTaskInput').keydown(function (e) {
+         if (e.keyCode == 13) {
+         $.ajax({
+              url : "process/ajaxHandler.php",
+              method : "post",
+              data : {action: "addTask",taskTitle:  $('#addTaskInput').val(),folderId:  <?= $_GET['folder_id']?>},
+              success : function(response){
+                // alert('Data from the server = ' + response);
+                if(response == '1'){
+                   location.reload();
+                }else{
+                  alert(response);
+                }
+              }
+            })
+    }
+})
+          $('#addTaskInput').focus()
+
       });
+
+ 
+
   </script>
 
 </body>
