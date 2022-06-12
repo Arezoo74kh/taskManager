@@ -20,8 +20,8 @@ switch($_POST['action']){
     break;
     case "addTask":
 
-        // $folderId = $_POST['folderId'];
-        // $taskTitle = $_POST['taskTitle'];
+        $folderId = $_POST['folderId'];
+        $taskTitle = $_POST['taskTitle'];
         if(!isset($_POST['folderId']) || empty($_POST['folderId'])){
             echo "Please choose 1 folder...";
             die();
@@ -31,6 +31,14 @@ switch($_POST['action']){
             die();
         }
         echo addTask($taskTitle,$folderId); 
+    break;
+    case "doneSwitch":
+        $taskId = $_POST['taskId'];
+        if(!isset($taskId) || !is_numeric($taskId)){
+            echo "Undefined taskID...";
+            die();
+        }
+        doneSwitch($taskId);
     break;
     
     default:

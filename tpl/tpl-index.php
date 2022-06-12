@@ -23,10 +23,12 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="folderList">
-        <li class=" <?= isset($_GET['folder_id']) ? '' : 'active' ?>"> <i class="fa  <?= isset($_GET['folder_id']) ? 'fa-folder' : 'fa-folder-open' ?>"></i>All</li>
+        <li class=" <?= isset($_GET['folder_id']) ? '' : 'active' ?>">
+          <a href="<?=siteUrl()?>"> <i class="fa  <?= isset($_GET['folder_id']) ? 'fa-folder' : 'fa-folder-open' ?>"></i>All</a>
+        </li>
         <?php foreach ($folders as $folder):?>
             <li class=" <?= ($_GET['folder_id'] == $folder->id) ? 'active' : ''?> "> 
-             <a href="?folder_id=<?= $folder->id ?>"> <i class="fa <?= ($_GET['folder_id'] == $folder->id) ? 'fa-folder-open' : 'fa-folder'?>"></i><?= $folder->name ?> </a> 
+             <a href="<?=siteUrl("?folder_id= $folder->id")?>"> <i class="fa <?= ($_GET['folder_id'] == $folder->id) ? 'fa-folder-open' : 'fa-folder'?>"></i><?= $folder->name ?> </a> 
              <a class="remove" href= "?delete_folder=<?= $folder->id ?>"><i class="fa fa-trash-alt" id="trashHover" onclick="return confirm('Are you sure to delete this item?\n<?= $folder->name ?>');"></i></a>
             </li>
           <?php endforeach;?>
@@ -54,7 +56,7 @@
           <?php if(sizeof($tasks)):?>
           <?php foreach ($tasks as $task):?>
             <li class="<?= $task->is_done ? 'checked' : '' ; ?>">
-            <i class="fa <?= $task->is_done ? 'fa-check-square' : 'fa-square' ; ?> "></i>
+            <i data-taskId = "<?= $task->id?>" class="isDone fa <?= $task->is_done ? 'fa-check-square' : 'fa-square' ; ?> "></i>
             <i class="fa <?= $task->is_done ? 'fas fa-smile-wink' : 'fa-clock' ; ?> "></i>
             <span><?=$task->title?></span>
               <div class="info">
@@ -77,6 +79,21 @@
   <script  src="assets/js/script.js"></script>
   <script>
       $(document).ready(function(){
+
+        $('.isDone').click(function(e){
+            var tId = $(this).attr('data-taskId');
+            $.ajax({
+              url : "process/ajaxHandler.php",
+              method : "post",
+              data : {action: "doneSwitch",taskId: tId},
+              success : function(response){
+                  location.reload();
+              }
+            })
+          });
+
+
+
           $('#addFolderBtn').click(function(e){
             var input = $('input#addFolderInput');
             $.ajax({
@@ -86,8 +103,8 @@
               success : function(response){
                 // alert('Data from the server = ' + response);
                 if(response == '1'){
-                  // $('<li> <a href="#"><i class="fa fa-folder"></i>'+input.val()+' </a> </li>').appendTo('ul.folderList');
-                  location.reload();
+                  $('<li> <a href="#"><i class="fa fa-folder"></i>'+input.val()+' </a> </li>').appendTo('ul.folderList');
+                  // location.reload();
                 }else{
                   alert(response);
                 }
@@ -100,7 +117,7 @@
          $.ajax({
               url : "process/ajaxHandler.php",
               method : "post",
-              data : {action: "addTask",taskTitle:  $('#addTaskInput').val(),folderId:  <?= $_GET['folder_id']?>},
+              data : {action: "addTask",taskTitle:  $('#addTaskInput').val(),folderId:  <?= $_GET['folder_id'] ?? 0 ?>},
               success : function(response){
                 // alert('Data from the server = ' + response);
                 if(response == '1'){

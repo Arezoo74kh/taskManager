@@ -9,7 +9,9 @@
         }
         return false;
     }
-
+    function siteUrl($uri = ''){
+       return BASE_URL . $uri;
+    }
 
     function diePage($msg){
         echo "<div style='padding:30px;width:80%;margin:50px auto;background: #f9dede;border:1mpx solid #cca4a4;color:red;border-radius:5px'>$msg</div>";
@@ -21,3 +23,4 @@
         var_dump($var);
         echo "</pre>";
     }
+

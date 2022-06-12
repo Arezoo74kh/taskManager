@@ -24,6 +24,15 @@ function getCurrentUserId(){
         return $stmt->rowCount();
     }
 
+    function doneSwitch($taskId){
+        global $pdo;
+        $currentUserId = getCurrentUserId();
+        $sql = "update `tasks` set is_done = 1 - is_done where user_id = :userID and id = :taskID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':taskID'=>$taskId,':userID'=>$currentUserId]);
+        return $stmt->rowCount();
+    }
+
     function getFolders(){
         global $pdo;
         $currentUserId = getCurrentUserId();
