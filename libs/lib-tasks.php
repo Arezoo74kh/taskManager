@@ -4,7 +4,7 @@
 
 function getCurrentUserId(){
     //get login user id;
-    return 1;
+    return getLoggedInUser()->id ?? 0;
 }
 
     function deleteFolder($folder_id){

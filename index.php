@@ -2,12 +2,17 @@
 
 include "bootstrap/init.php";
 
+if(isset($_GET['logout'])){
+        logout();
+    }
+
 if(!isLogedIn()){
 //redirect to auth form
-header("Location: " . siteUrl('auth.php'));
+redirect(siteUrl('auth.php'));
 }
 
-
+# user is loggedIn
+$user = getLoggedInUser();
 
 if (isset($_GET['delete_folder']) && is_numeric($_GET['delete_folder'])) {
     $deletedCount = deleteFolder($_GET['delete_folder']);
@@ -25,6 +30,6 @@ $folders = getFolders();
 
 $tasks = getTasks();
 // dd($tasks);
-include "tpl/tpl-index.php";
 
+include "tpl/tpl-index.php";
 ?>

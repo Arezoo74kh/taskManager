@@ -4,12 +4,42 @@
 
 
     function isLogedIn(){
+        return isset($_SESSION['login']) ? true : false;
+    }
+    function getLoggedInUser(){
+        return $_SESSION['login'] ?? null;
+    }   
+
+    function getUserByEmail($email){
+        global $pdo;
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':email'=>$email]);
+        $record = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $record[0] ?? null;
+    }
+
+    function logout(){
+        unset($_SESSION['login']);
+    }
+
+    function login($email,$password){
+        $user = getUserByEmail($email);
+        if(is_null($user)){
+            return false;
+        }
+
+        #check the password
+        if(password_verify($password,$user->password)){
+            #login is successfull!
+            $user->image = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->$email ) ) );
+            $_SESSION['login'] = $user;
+
+            return true;
+        }
         return false;
     }
-  
-    function login($user,$password){
-        return 1;
-    }
+
     function register($userData){
         global $pdo;
         #validation of $userdata here(isValidEmail,isValidUserName,isValidPassword)

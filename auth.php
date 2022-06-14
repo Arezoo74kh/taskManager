@@ -1,5 +1,7 @@
 <?php
 
+// use Symfony\Component\Mime\Message;
+
 include "bootstrap/init.php";
 
 $homeUrl = siteUrl();
@@ -12,16 +14,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' ){
         if(!$result){
             massage('Error: an error in registration!');
         }else{
-            massage("Registration is successfull! <br>
-            <a href='$homeUrl'>Manage your tasks...</a>
-            ");
+            // massage("Registration is successfull! .<br>
+            // <a href='{$homeUrl}auth.php'>Please Longin...</a>
+            // ",'success');
+            redirect('auth.php');
         }
-    }elseif($action == 'login'){
+    }else if($action == 'login'){
         $result = login($params['email'],$params['password']);
-        massage('Error: email or password is invalid!');
+       if(!$result){
+        massage("Error: email or password is invalid!");
+       }else{
+        // massage("you are now Logged In! .<br>
+        // <a href='$homeUrl'>Manage your tasks...</a>
+        // ",'success');
+         redirect(siteUrl());
+       }
     }
 }
 
 include "tpl/tpl-auth.php";
-
 ?>

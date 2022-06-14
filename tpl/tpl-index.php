@@ -11,7 +11,9 @@
 <div class="page">
   <div class="pageHeader">
     <div class="title">My Task manager</div>
-    <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">Arezoo</span><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg" width="40" height="40"/></div>
+    <div class="userPanel">
+     <a href="<?= siteUrl("?logout= 1")?>"> <i class="fa fa-sign-out-alt"></i> </a>
+      <span class="username"><?= $user->name ?? 'Unkown'; ?></span><img src="<?= $user->image; ?>" width="40" height="40"/></div>
   </div>
   <div class="main">
     <div class="nav">
